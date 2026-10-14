@@ -23,6 +23,7 @@
       --sans: Inter, "Noto Sans", "Liberation Sans", "Segoe UI", sans-serif;
       --mono: "JetBrains Mono", "Liberation Mono", ui-monospace, monospace;
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -47,6 +48,7 @@
       z-index: 20;
     }
     .skip:focus { top: 0.5rem; }
+
     .top {
       position: sticky;
       top: 0;
@@ -94,8 +96,10 @@
       text-decoration: underline;
       text-decoration-thickness: 1px;
     }
+
     main { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem 4rem; }
     section, #inicio { scroll-margin-top: calc(var(--header) + 0.75rem); }
+
     #inicio { padding: 3.2rem 0 2.4rem; border-bottom: 1px solid var(--line); }
     .kicker {
       font-family: var(--mono);
@@ -134,6 +138,583 @@
     }
     .hero-links { display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; margin-top: 1.4rem; }
     .hero-links a { font-size: 0.95rem; }
+
     .block { padding: 3rem 0; border-bottom: 1px solid var(--line); }
     .block h2 {
       font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0.35rem 0 1.2rem;
+      max-width: 22ch;
+    }
+
+    #perfil {
+      background: var(--bg-2);
+      margin-top: 2rem;
+      padding: 2rem 1.4rem 2.2rem;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--copper);
+    }
+    #perfil .prose { max-width: 42rem; }
+    #perfil p { margin: 0 0 1rem; }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin: 1.5rem 0 1.2rem;
+    }
+    .facts div { background: var(--soft); padding: 0.9rem 0.85rem 1rem; }
+    .facts strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .facts span { display: block; margin-top: 0.4rem; color: var(--muted); font-size: 0.86rem; line-height: 1.35; }
+    .perfil-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.3rem;
+      padding: 0.55rem 0.85rem;
+      border: 1px solid var(--copper);
+      background: var(--bg);
+      color: var(--copper-deep);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .perfil-link:hover { background: var(--copper); color: #fffdf8; }
+
+    .role {
+      display: grid;
+      grid-template-columns: 11.5rem 1fr;
+      gap: 0.4rem 1.5rem;
+      padding: 1.35rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .role:first-of-type { border-top: 0; }
+    .role-when {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+    }
+    .role h3 { margin: 0; font-size: 1.15rem; font-weight: 650; letter-spacing: -0.01em; }
+    .role-where { margin: 0.15rem 0 0.55rem; color: var(--muted); }
+    .role ul { margin: 0; padding-left: 1.1rem; }
+    .role li { margin: 0.28rem 0; }
+    .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 0.25rem;
+    }
+
+    .hist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+    .hist li {
+      display: grid;
+      grid-template-columns: 12.5rem 1fr;
+      gap: 0.3rem 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .hist .when { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+    .subh {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin: 2rem 0 0.6rem;
+    }
+
+    .practices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem 2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .practices li { border-top: 1px solid var(--line); padding-top: 0.8rem; }
+    .practices .n {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--copper);
+    }
+    .practices h3 { margin: 0.2rem 0 0.35rem; font-size: 1.05rem; }
+    .practices p { margin: 0; color: var(--muted); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .card {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      padding: 1.1rem 1.15rem 1.2rem;
+    }
+    .card h3 { margin: 0.25rem 0 0.4rem; font-size: 1.12rem; }
+    .card p { margin: 0; color: var(--muted); }
+    .card .meta { font-family: var(--mono); font-size: 0.75rem; color: var(--copper); margin: 0; }
+    .note { color: var(--muted); font-size: 0.92rem; margin-top: 1rem; }
+
+    .groups {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem 2rem;
+    }
+    .groups h3 { margin: 0 0 0.45rem; font-size: 1.02rem; }
+    .groups h3.follow { margin-top: 1.2rem; }
+    .groups ul { margin: 0; padding-left: 1.1rem; }
+    .groups li { margin: 0.18rem 0; }
+    #formacao { margin-top: 1.6rem; }
+    .edu { list-style: none; margin: 0; padding: 0; }
+    .edu li { padding: 0.7rem 0; border-top: 1px solid var(--line); }
+    .edu strong { display: block; }
+    .edu span { color: var(--muted); }
+
+    #contato { border-bottom: 0; }
+    .contact-list { list-style: none; margin: 0; padding: 0; max-width: 36rem; }
+    .contact-list li {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      gap: 0.5rem;
+      padding: 0.75rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .contact-list li:last-child { border-bottom: 1px solid var(--line); }
+    .contact-list .lbl {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 0.2rem;
+    }
+    footer {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 1.25rem 2.5rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 800px) {
+      .menu-btn { display: inline-flex; }
+      #menu {
+        display: none;
+        position: absolute;
+        top: var(--header);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+        padding: 0.6rem 1.25rem 1rem;
+        background: var(--bg);
+        border-bottom: 1px solid var(--line);
+      }
+      #menu.is-open { display: flex; }
+      #menu a { padding: 0.45rem 0; }
+      .facts, .practices, .cards, .groups { grid-template-columns: 1fr; }
+      .role, .hist li, .contact-list li { grid-template-columns: 1fr; }
+      #perfil { margin-left: -1.25rem; margin-right: -1.25rem; border-left: 0; border-right: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#perfil">Ir para o perfil</a>
+  <header class="top">
+    <a class="brand" href="#inicio">Alain Ageev</a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav id="menu" aria-label="Seções">
+      <a href="#inicio">Início</a>
+      <a href="#perfil">Perfil</a>
+      <a href="#atuacao">Como atuo</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#competencias">Competências</a>
+      <a href="#contato">Contato</a>
+      <a class="ext" href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </nav>
+  </header>
+
+  <main>
+    <header id="inicio">
+      <p class="kicker">Brasil</p>
+      <h1>Alain Ageev</h1>
+      <p class="creds">SFC · Lean Six Sigma</p>
+      <p class="headline">Governança em TI na Soultech Solutions | Advisor | Qualidade | Risco | Compliance</p>
+      <p class="lede">Consultor de Transformação Digital e Processos na Soultech Solutions, em São Paulo, desde março de 2026. Antes disso, governança de qualidade na Unidas e QA Leader na Brasilprev. Testes de software desde 2007.</p>
+      <p class="hero-links">
+        <a href="#perfil">Perfil</a>
+        <a href="#atuacao">Experiência</a>
+        <a href="mailto:alainageev@gmail.com">alainageev@gmail.com</a>
+      </p>
+    </header>
+
+    <section class="block" id="perfil" aria-labelledby="perfil-titulo">
+      <p class="kicker">Perfil</p>
+      <h2 id="perfil-titulo">Padrão de qualidade, risco e a implantação que foi vendida.</h2>
+      <div class="prose">
+        <p>Sou consultor de governança em TI na Soultech Solutions. Desde março de 2026 conduzo a oferta e a entrega no mesmo fluxo: identificação de oportunidades, proposta técnico-comercial, site institucional, estruturação de CRM e automação de processos comerciais e operacionais. Tenho a certificação Scrum Foundations Professional Certificate (SFPC).</p>
+        <p>Na Unidas, de outubro de 2024 a janeiro de 2026, estruturei padrões de qualidade e testes funcionais e não funcionais em 40 squads, com foco em segurança e compliance, e liderei o ciclo TMMi — diagnóstico, plano de ação, implementação, verificação e melhoria contínua. Facilitei dailies, plannings, reviews e retrospectivas em 20 squads e conduzi o onboarding de 4 analistas. Na Brasilprev, como QA Leader da área DXLAB (20 squads), de setembro de 2020 a janeiro de 2024, a gestão de reclamações e ouvidoria reduziu em 38% o número de reclamações em três anos. As ferramentas dessa gestão foram Azure DevOps, ITSM, Power BI, Power Automate, Salesforce e SharePoint.</p>
+        <p>A trajetória em testes começa em 2007, na Nextel. Selenium IDE e Selenium WebDriver aparecem no CESAR e na FAST; Quality Center e Quick Test, na atualização do SAP 4.6 para 6.0, na Mispa, cliente ATOS/Siemens. MBA em digital business pela USP/Esalq, de março de 2024 a dezembro de 2026. Português nativo.</p>
+      </div>
+      <div class="facts">
+        <div>
+          <strong>40</strong>
+          <span>squads com padrão de qualidade e teste na Unidas</span>
+        </div>
+        <div>
+          <strong>38%</strong>
+          <span>menos reclamações de ouvidoria em 3 anos na Brasilprev</span>
+        </div>
+        <div>
+          <strong>20</strong>
+          <span>squads com ritos ágeis na Unidas</span>
+        </div>
+        <div>
+          <strong>4</strong>
+          <span>analistas no onboarding conduzido na Unidas</span>
+        </div>
+      </div>
+      <a class="perfil-link" href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">LinkedIn · linkedin.com/in/alainageev</a>
+    </section>
+
+    <section class="block" id="atuacao" aria-labelledby="atuacao-titulo">
+      <p class="kicker">Como atuo</p>
+      <h2 id="atuacao-titulo">Experiência</h2>
+
+      <article class="role">
+        <p class="role-when"><span class="tag">Atual</span><br>mar/2026 – atual<br>São Paulo</p>
+        <div>
+          <h3>Consultor de Transformação Digital e Processos</h3>
+          <p class="role-where">Soultech Solutions</p>
+          <ul>
+            <li>Identifico oportunidades, conduzo vendas consultivas e elaboro propostas técnico-comerciais a partir da necessidade do cliente.</li>
+            <li>Levanto requisitos, defino escopo e alinho a solução ao objetivo do negócio.</li>
+            <li>Acompanho o desenvolvimento e a atualização de sites institucionais, considerando experiência de uso, comunicação e objetivo comercial.</li>
+            <li>Estruturo o CRM: informação comercial, gestão de contatos e o acompanhamento de oportunidades.</li>
+            <li>Identifico automação de atividades comerciais e operacionais para reduzir tarefa manual.</li>
+            <li>Acompanho escopo, prazos, atividades, dependências e entregáveis até a execução.</li>
+            <li>Alinho expectativa com clientes e stakeholders na implantação e no suporte à entrega.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <p class="role-when">out/2024 – jan/2026<br>1 ano e 4 meses<br>São Paulo</p>
+        <div>
+          <h3>Consultor de governança em TI</h3>
+          <p class="role-where">Unidas</p>
+          <ul>
+            <li>Estruturei e apliquei padrões de qualidade e testes funcionais e não funcionais, alinhados a normas de mercado e ao negócio, com foco em segurança e compliance, em 40 squads.</li>
+            <li>Liderei o TMMi (Test Maturity Model Integration) no ciclo completo: diagnóstico da maturidade, plano de ação, implementação, verificação e melhoria contínua, com elevação do nível de maturidade dos processos de teste.</li>
+            <li>Desenvolvi KPIs de performance de QA e conduzi relatórios e FUPs de processos críticos para a liderança de TI.</li>
+            <li>Mapeei riscos, falhas, oportunidades e ameaças aos processos e, com Release Management e Gestão de Incidentes, conduzi análises de causa raiz (RCA) e a disseminação dos aprendizados.</li>
+            <li>Removi impedimentos no setup de ambientes de desenvolvimento, encurtando o tempo de entrega.</li>
+            <li>Facilitei dailies, plannings, reviews e retrospectivas em 20 squads.</li>
+            <li>Apoiei o time de QA com mentorias, feedbacks, PDIs e o onboarding de 4 novos analistas.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <p class="role-when">set/2020 – jan/2024<br>3 anos e 5 meses<br>São Paulo</p>
+        <div>
+          <h3>QA Leader</h3>
+          <p class="role-where">Brasilprev Seguros e Previdência S.A.</p>
+          <ul>
+            <li>Tratei reclamações e ouvidoria da área DXLAB (20 squads) e reduzi em 38% o número de reclamações em 3 anos.</li>
+            <li>Padronizei a qualidade de serviço entre áreas clientes por meio de análise de parecer técnico.</li>
+            <li>Gerenciei projetos, iniciativas estratégicas e riscos, com manutenção de metodologias, processos e ferramentas: Azure DevOps, ITSM, Power BI, Power Automate, Salesforce e SharePoint.</li>
+            <li>Acompanhei a qualidade e o prazo das entregas do time.</li>
+            <li>Atuei como avaliador técnico de novos analistas de testes para as squads.</li>
+            <li>Conduzi avaliação de desempenho, feedback e reuniões periódicas de desenvolvimento, a partir de feedbacks formais e informais de clientes internos.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <p class="role-when">fev/2020 – set/2020<br>8 meses<br>Recife</p>
+        <div>
+          <h3>Team Lead</h3>
+          <p class="role-where">WATI Consultoria · cliente MV, sistemas hospitalares</p>
+          <ul>
+            <li>Planejei, orientei e monitorei as entregas dos analistas de teste.</li>
+            <li>Fui referência técnica do time e tratei impedimentos e conflitos que afetavam a execução.</li>
+            <li>Liderei testes e controle de qualidade alinhados à necessidade dos usuários de sistemas hospitalares.</li>
+            <li>Dimensionei a capacidade da equipe para sustentar o volume de entregas.</li>
+          </ul>
+        </div>
+      </article>
+
+      <h3 class="subh">Cargos anteriores</h3>
+      <ul class="hist">
+        <li>
+          <span class="when">jun/2017 – fev/2020<br>Recife · 2 anos e 9 meses</span>
+          <span><strong>Montreal Oficial.</strong> Líder de equipe e instrutor (ago/2019 – fev/2020): implantação do SEI na Secretaria Estadual de Saúde de Pernambuco, com treinamento e gestão da mudança. Analista de Sistemas e requisito (jan/2019 – ago/2019): requisitos funcionais e não funcionais da SES com os usuários. Engenheiro QA (jun/2017 – jan/2019): estratégia, casos, massa de teste, testes funcionais, integrados, de regressão e de aceitação, defeitos e gestão de configuração.</span>
+        </li>
+        <li>
+          <span class="when">nov/2015 – ago/2016<br>Recife e região</span>
+          <span><strong>Solloweb · Sales Consultant.</strong> Projeto Expansão Nordeste: análise de mercado, prospecção, feedback de produto e reestruturação do site institucional, com levantamento de requisitos, validação funcional e testes. A função também cobre marketing digital e QA.</span>
+        </li>
+        <li>
+          <span class="when">abr/2015 – out/2015<br>Brasil</span>
+          <span><strong>Emprego.net · QA Test Engineer.</strong> Testes funcionais, cenários, casos de teste e homologação na plataforma nacional de empregos.</span>
+        </li>
+        <li>
+          <span class="when">out/2012 – mar/2015<br>Recife</span>
+          <span><strong>CESAR · Software Test Engineer.</strong> Testes funcionais e exploratórios na Rapidão Cometa (atual FedEx Brasil), massa de dados em banco e gestão de defeitos. Grupo de estudos de automação com Selenium IDE e Selenium WebDriver.</span>
+        </li>
+        <li>
+          <span class="when">fev/2012 – out/2012<br>Recife e região</span>
+          <span><strong>FAST - Soluções Tecnológicas · Software Test Engineer.</strong> Testes em aplicações web e automação funcional com Selenium IDE, massa de dados e gestão de defeitos.</span>
+        </li>
+        <li>
+          <span class="when">nov/2011 – mar/2012<br>Atos - Lapa</span>
+          <span><strong>Mispa Consultoria e Sistemas Ltda · SQA Analyst / Automation Test.</strong> Cliente ATOS/Siemens. Testes de desempenho no Quality Center e cenários automatizados no Quick Test, na atualização do SAP 4.6 para 6.0.</span>
+        </li>
+        <li>
+          <span class="when">set/2010 – out/2011<br>São Paulo e região</span>
+          <span><strong>AgenciaClick Isobar · QA Analyst.</strong> Planejamento e execução de testes, massa de dados e gestão de bugs em sites, jogos, hotsites, smartphones e fanpages.</span>
+        </li>
+        <li>
+          <span class="when">nov/2009 – ago/2010<br>São Paulo e região</span>
+          <span><strong>ATECH – Negócios em Tecnologia S/A · Test Analyst.</strong> Sistema Java de gestão de procedimentos e custos hospitalares, com metodologias ágeis, histórias de teste, ambientes de teste e release (build e deploy).</span>
+        </li>
+        <li>
+          <span class="when">jul/2009 – out/2009<br>São Paulo e região</span>
+          <span><strong>CPqD Technologies &amp; Systems, Inc. · Test Analyst.</strong> Testes na integração dos sistemas do Santander e do Unibanco, com massa de dados e gestão de defeitos.</span>
+        </li>
+        <li>
+          <span class="when">fev/2008 – jun/2009<br>São Paulo e região</span>
+          <span><strong>F5 Web Design e Tecnologia Atualizada · Test Analyst.</strong> Testes em sites, jogos, hotsites e mobile, com massa de dados e gestão de defeitos.</span>
+        </li>
+        <li>
+          <span class="when">jan/2007 – jan/2008<br>São Paulo e região</span>
+          <span><strong>Nextel Telecomunicações Ltda · Test Analyst.</strong> Plano de testes em aplicações web e em financiamento Oracle, incluindo a fase de pré-teste e a integração com o desenvolvimento.</span>
+        </li>
+        <li>
+          <span class="when">fev/2006 – dez/2006<br>São Paulo e região</span>
+          <span><strong>UOL · Analyst Support.</strong> Prestação de serviços pela G&amp;P. Suporte ao cliente em conexão e instalação: TCP/IP, ADSL, e-mail e navegadores.</span>
+        </li>
+        <li>
+          <span class="when">mai/2003 – nov/2004<br>Osasco</span>
+          <span><strong>Bradesco · Telemarketing operator.</strong> Atendimento de cartão de crédito e conta corrente em call center, com orientação sobre o sistema bancário e venda passiva e ativa de pacotes.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="block" id="ponte" aria-labelledby="ponte-titulo">
+      <p class="kicker">Prática</p>
+      <h2 id="ponte-titulo">O que entra no trabalho, no detalhe.</h2>
+      <ol class="practices">
+        <li>
+          <span class="n">01 · padrão</span>
+          <h3>Qualidade, segurança e compliance na escala da operação</h3>
+          <p>Na Unidas, o padrão de teste funcional e não funcional valeu para 40 squads, alinhado a norma de mercado e ao negócio.</p>
+        </li>
+        <li>
+          <span class="n">02 · maturidade</span>
+          <h3>TMMi no ciclo inteiro</h3>
+          <p>Diagnóstico da maturidade, plano de ação, implementação, verificação e melhoria contínua, com elevação do nível de maturidade dos processos de teste.</p>
+        </li>
+        <li>
+          <span class="n">03 · indicador</span>
+          <h3>KPI e FUP para a liderança</h3>
+          <p>Indicadores de performance de QA e acompanhamento de processos críticos, para a decisão de TI na Unidas.</p>
+        </li>
+        <li>
+          <span class="n">04 · causa</span>
+          <h3>RCA com release e incidente</h3>
+          <p>Riscos e falhas mapeados com Release Management e Gestão de Incidentes, com a causa raiz disseminada para evitar falha recorrente.</p>
+        </li>
+        <li>
+          <span class="n">05 · time</span>
+          <h3>Rito ágil, mentoria e onboarding</h3>
+          <p>Dailies, plannings, reviews e retrospectivas em 20 squads na Unidas. Mentorias, feedback, PDI e o onboarding de 4 analistas.</p>
+        </li>
+        <li>
+          <span class="n">06 · entrega</span>
+          <h3>Da proposta à implantação</h3>
+          <p>Na Soultech Solutions, a mesma frente vende e implanta: site institucional, CRM e automação de processo, com escopo, prazo e entregável acompanhados.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="block" id="projetos" aria-labelledby="projetos-titulo">
+      <p class="kicker">Projetos</p>
+      <h2 id="projetos-titulo">Frentes com nome na trajetória.</h2>
+      <div class="cards">
+        <article class="card">
+          <p class="meta">Soultech Solutions · mar/2026 – atual</p>
+          <h3>Sites, CRM e automações</h3>
+          <p>Frente em execução: venda consultiva, proposta, acompanhamento de site institucional, estruturação de CRM e automação de atividades comerciais e operacionais.</p>
+        </article>
+        <article class="card">
+          <p class="meta">Montreal Oficial · ago/2019 – fev/2020 · Recife</p>
+          <h3>SEI na SES-PE</h3>
+          <p>Liderança da implantação do Sistema Eletrônico de Informações na Secretaria Estadual de Saúde de Pernambuco: treinamento, materiais, turmas e gestão da mudança. O órgão registrou a maior velocidade de implantação entre os do Governo de Pernambuco, e o modelo foi replicado por outros órgãos.</p>
+        </article>
+        <article class="card">
+          <p class="meta">CESAR · out/2012 – mar/2015 · Recife</p>
+          <h3>Rapidão Cometa</h3>
+          <p>Testes funcionais e exploratórios no projeto da Rapidão Cometa, atual FedEx Brasil. Massa de dados em banco, gestão de defeitos e estudo de Selenium IDE e Selenium WebDriver.</p>
+        </article>
+        <article class="card">
+          <p class="meta">Mispa · nov/2011 – mar/2012 · cliente ATOS/Siemens</p>
+          <h3>SAP 4.6 para 6.0</h3>
+          <p>Testes de desempenho no Quality Center e cenários automatizados no Quick Test, na atualização de versão do SAP.</p>
+        </article>
+        <article class="card">
+          <p class="meta">CPqD · jul/2009 – out/2009</p>
+          <h3>Santander e Unibanco</h3>
+          <p>Testes na integração entre os sistemas do Santander e do Unibanco, com massa de dados e gestão de defeitos.</p>
+        </article>
+        <article class="card">
+          <p class="meta">Solloweb · nov/2015 – ago/2016 · Recife e região</p>
+          <h3>Expansão Nordeste</h3>
+          <p>Análise de mercado, prospecção e reestruturação do site institucional, com requisitos, validação funcional e testes de qualidade.</p>
+        </article>
+      </div>
+      <p class="note">Não há repositório público ligado a estas frentes. Os nomes saem do currículo, não de um perfil no GitHub.</p>
+    </section>
+
+    <section class="block" id="competencias" aria-labelledby="comp-titulo">
+      <p class="kicker">Competências</p>
+      <h2 id="comp-titulo">Ferramentas, prática e formação.</h2>
+      <div class="groups">
+        <div>
+          <h3>Governança e teste</h3>
+          <ul>
+            <li>Governança de TI, padrões de qualidade, segurança e compliance</li>
+            <li>Testes funcionais e não funcionais, exploratórios, de integração, de regressão, de aceitação e de desempenho</li>
+            <li>TMMi, KPIs de QA, RCA, gestão de incidentes e release management</li>
+            <li>Parecer técnico, ouvidoria e gestão de defeitos</li>
+            <li>Ritos Scrum: daily, planning, review e retrospectiva</li>
+            <li>Mentoria, feedback, PDI, avaliação técnica e onboarding</li>
+            <li>Massa de dados e gestão de configuração</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Ferramentas citadas nos cargos</h3>
+          <ul>
+            <li>Azure DevOps, ITSM, Power BI e Power Automate</li>
+            <li>Salesforce e SharePoint</li>
+            <li>Selenium IDE e Selenium WebDriver</li>
+            <li>Quality Center e Quick Test, no contexto SAP</li>
+          </ul>
+          <h3 class="follow">Implantação e negócio</h3>
+          <ul>
+            <li>Venda consultiva e proposta técnico-comercial</li>
+            <li>Site institucional, CRM e automação de processos</li>
+            <li>Gestão de projetos: escopo, prazo, dependência e entregável</li>
+            <li>Gestão da mudança e treinamento, na implantação do SEI</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Principais competências no perfil</h3>
+          <ul>
+            <li>Presentations</li>
+            <li>Business Requirements</li>
+            <li>Ecosystem Services</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Certificações e cursos</h3>
+          <ul>
+            <li>Scrum Foundations Professional Certificate (SFPC), em Honors-Awards</li>
+            <li>Fundamentos da Segurança desde a Concepção</li>
+            <li>Arquitetura de Software: Introdução ao Desenvolvimento de Sistemas Sustentáveis</li>
+            <li>Como Liderar e Motivar Diferentes Personalidades no Ambiente de Trabalho</li>
+            <li>Creating a Positive Customer Experience</li>
+            <li>Como Usar o Pensamento Crítico para Refinar o Julgamento e a Tomada de Decisões</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="formacao">
+        <h3 class="subh">Formação</h3>
+        <ul class="edu">
+          <li>
+            <strong>MBA USP/Esalq</strong>
+            <span>MBA, digital business · março de 2024 – dezembro de 2026</span>
+          </li>
+          <li>
+            <strong>Centro Universitário FIEO</strong>
+            <span>Technology Analysis and System Development · Desenvolvimento de Sistema · junho de 2008 – dezembro de 2011</span>
+          </li>
+          <li>
+            <strong>Fundação Bradesco</strong>
+            <span>Hardware Technician · Computer Hardware Technology/Technician · 2001 – 2003</span>
+          </li>
+        </ul>
+        <h3 class="subh">Idioma</h3>
+        <p>Português — nativo.</p>
+      </div>
+    </section>
+
+    <section class="block" id="contato" aria-labelledby="contato-titulo">
+      <p class="kicker">Contato</p>
+      <h2 id="contato-titulo">Onde me encontrar.</h2>
+      <ul class="contact-list">
+        <li>
+          <span class="lbl">E-mail</span>
+          <a href="mailto:alainageev@gmail.com">alainageev@gmail.com</a>
+        </li>
+        <li>
+          <span class="lbl">Telefone</span>
+          <a href="tel:+5581995148993">(81) 99514-8993</a>
+        </li>
+        <li>
+          <span class="lbl">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/in/alainageev/</a>
+        </li>
+        <li>
+          <span class="lbl">GitHub</span>
+          <span><a href="https://github.com/alain-ageev">https://github.com/alain-ageev</a></span>
+        </li>
+        <li>
+          <span class="lbl">Local</span>
+          <span>Brasil. A função atual, na Soultech Solutions, está em São Paulo.</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>Alain Ageev · Governança em TI na Soultech Solutions</p>
+  </footer>
+  <script>
+    (function () {
+      var btn = document.getElementById("menu-btn");
+      var menu = document.getElementById("menu");
+      btn.addEventListener("click", function () {
+        var open = menu.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      menu.addEventListener("click", function (event) {
+        if (event.target.closest("a")) {
+          menu.classList.remove("is-open");
+          btn.setAttribute("aria-expanded", "false");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
