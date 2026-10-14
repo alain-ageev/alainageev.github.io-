@@ -5,715 +5,583 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Alain Ageev · Governança em TI</title>
   <meta name="description" content="Alain Ageev, consultor de governança em TI na Soultech Solutions. Qualidade, risco e compliance. Passagens pela Unidas, Brasilprev e WATI.">
-  <meta name="theme-color" content="#f3ecdf">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23f3ecdf' width='32' height='32'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia' font-size='13' fill='%238c3a22'%3EAA%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23F2F2F2' width='32' height='32' rx='8'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='ui-monospace,monospace' font-size='12' font-weight='700' fill='%230A0A0A'%3EAA%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f3ecdf;
-      --bg-2: #fffdf8;
-      --ink: #1c1915;
-      --muted: #4f493f;
-      --line: #d9cdb8;
-      --copper: #8c3a22;
-      --copper-deep: #6a2b18;
-      --soft: #f7f1e6;
-      --max: 68rem;
-      --header: 4.25rem;
-      --serif: "Liberation Serif", "Noto Serif", Georgia, "Times New Roman", serif;
-      --sans: Inter, "Noto Sans", "Liberation Sans", "Segoe UI", sans-serif;
-      --mono: "JetBrains Mono", "Liberation Mono", ui-monospace, monospace;
+      --dest: #A78BFA;
+      --dest-claro: #C4B5FD;
+      --bg: #0A0A0A;
+      --bg-2: #111111;
+      --card: #151515;
+      --card-2: #1C1C1C;
+      --line: #262626;
+      --line-2: #3A3A3A;
+      --text: #F2F2F2;
+      --text-2: #A3A3A3;
+      --text-3: #6B6B6B;
+      --accent: #1FD65F;
+      --accent-rgb: 31, 214, 95;
+      --radius: 14px;
+      --font: Inter, system-ui, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .skip { position: absolute; left: 16px; top: -40px; background: var(--text); color: var(--bg); padding: 8px 12px; z-index: 80; border-radius: 8px; }
+    .skip:focus { top: 8px; }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-size: 1.05rem;
-      line-height: 1.6;
-    }
-    img { max-width: 100%; }
-    a { color: var(--copper-deep); text-underline-offset: 0.18em; }
-    a:hover { color: var(--copper); }
-    :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
-    .skip {
-      position: absolute;
-      left: 1rem;
-      top: -4rem;
-      background: var(--ink);
-      color: var(--bg);
-      padding: 0.5rem 0.8rem;
-      z-index: 20;
-    }
-    .skip:focus { top: 0.5rem; }
+    .nav { position: fixed; inset: 0 0 auto; z-index: 50; background: rgba(10,10,10,.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+    .nav.scrolled { border-color: var(--line); }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+    .brand-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--text); color: var(--bg); display: grid; place-items: center; font: 700 12px var(--mono); }
+    .menu { display: flex; gap: 6px; align-items: center; }
+    .menu a { font-size: 13.5px; color: var(--text-2); padding: 7px 14px; border-radius: 999px; transition: color .15s, background .15s; }
+    .menu a:hover, .menu a.active { color: var(--text); background: var(--card-2); }
+    .menu a.cta { color: var(--text); border: 1px solid var(--line-2); }
+    .nav-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 7px; vertical-align: 1px; }
+    .menu-btn { display: none; background: none; border: 1px solid var(--line-2); color: var(--text); border-radius: 8px; width: 38px; height: 34px; font-size: 16px; cursor: pointer; }
 
-    .top {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      min-height: var(--header);
-      padding: 0.7rem 1.25rem;
-      background: rgba(243, 236, 223, 0.94);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(8px);
-    }
-    .brand {
-      font-family: var(--serif);
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.15rem;
-      letter-spacing: -0.02em;
-    }
-    .menu-btn {
-      display: none;
-      font: inherit;
-      background: transparent;
-      border: 1px solid var(--ink);
-      padding: 0.35rem 0.7rem;
-      cursor: pointer;
-    }
-    #menu {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.35rem 1rem;
-    }
-    #menu a {
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 0.92rem;
-    }
-    #menu a:hover { color: var(--copper); }
-    #menu a[aria-current="page"],
-    #menu a.ext {
-      color: var(--copper-deep);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-    }
+    .hero { position: relative; overflow: hidden; min-height: 100vh; display: flex; align-items: center; padding: 110px 0 70px; background: var(--bg); }
+    .hero > .wrap { position: relative; z-index: 1; }
+    #grade { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background:
+      radial-gradient(900px 500px at 85% 15%, rgba(255,255,255,.06), transparent 60%),
+      linear-gradient(to bottom, transparent 70%, var(--bg)); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 56px; align-items: center; }
+    .otw { display: flex; width: fit-content; align-items: center; gap: 10px; padding: 7px 14px 7px 12px; margin-bottom: 18px; border: 1px solid rgba(var(--accent-rgb), .35); background: rgba(var(--accent-rgb), .07); border-radius: 999px; font-size: 13px; color: var(--text-2); transition: border-color .2s; }
+    .otw:hover { border-color: rgba(var(--accent-rgb), .7); }
+    .otw b { color: var(--accent); font-weight: 700; letter-spacing: .2px; }
+    .otw span { padding-left: 10px; border-left: 1px solid rgba(var(--accent-rgb), .25); }
+    .otw i { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .otw i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--accent); animation: pulso 1.8s ease-out infinite; }
+    @keyframes pulso { from { transform: scale(1); opacity: .7; } to { transform: scale(3); opacity: 0; } }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font: 600 11.5px var(--mono); letter-spacing: 1.6px; text-transform: uppercase; color: var(--text-2); margin-bottom: 22px; }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--text-3); }
+    .hero h1 { font-size: clamp(38px, 6vw, 64px); line-height: 1.04; letter-spacing: -2px; font-weight: 800; margin-bottom: 22px; }
+    .hero h1 .dim { background: linear-gradient(90deg, var(--dest), var(--dest-claro)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p.lead { font-size: 17px; color: var(--text-2); max-width: 540px; margin-bottom: 32px; }
+    .hero p.lead strong { color: var(--text); font-weight: 600; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; font: 600 14px var(--font); padding: 13px 22px; border-radius: 10px; border: 1px solid var(--line-2); color: var(--text); background: transparent; cursor: pointer; transition: transform .15s, background .15s, border-color .15s; }
+    .btn:hover { transform: translateY(-1px); border-color: var(--text-3); }
+    .btn-solid { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .btn-solid:hover { background: #fff; }
+    .disp { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 26px; font-size: 13.5px; color: var(--text-2); }
+    .disp span { display: inline-flex; align-items: center; gap: 8px; }
+    .disp span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .12); }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { font: 500 12px var(--mono); color: var(--text-2); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; }
 
-    main { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem 4rem; }
-    section, #inicio { scroll-margin-top: calc(var(--header) + 0.75rem); }
+    .hero-pola { justify-self: center; width: min(360px, 100%); background: #F7F4EE; padding: 14px 14px 0; border-radius: 4px; box-shadow: 0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04); rotate: 3deg; color: #1C1917; }
+    .hero-sheet { background: #141414; color: #F2F2F2; border-radius: 2px; padding: 22px 18px 16px; min-height: 320px; display: flex; flex-direction: column; gap: 16px; }
+    .hero-sheet .aa { font: 800 42px/1 var(--font); letter-spacing: -1.5px; }
+    .hero-sheet .who { color: #A3A3A3; font-size: 14px; }
+    .hero-nums { display: grid; gap: 10px; margin-top: auto; }
+    .hero-nums div { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-top: 1px solid #262626; padding-top: 8px; }
+    .hero-nums b { font-size: 22px; letter-spacing: -.5px; }
+    .hero-nums span { color: #A3A3A3; font-size: 12.5px; text-align: right; }
+    .hero-pola figcaption { height: 62px; display: grid; place-items: center; font: 600 15px var(--mono); letter-spacing: .02em; }
 
-    #inicio { padding: 3.2rem 0 2.4rem; border-bottom: 1px solid var(--line); }
-    .kicker {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--copper);
-      margin: 0 0 0.8rem;
-    }
-    h1 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(2.6rem, 6vw, 4.6rem);
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      margin: 0;
-    }
-    .creds {
-      margin: 0.7rem 0 0;
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    .headline {
-      font-family: var(--serif);
-      font-size: clamp(1.35rem, 2.4vw, 1.85rem);
-      font-weight: 400;
-      line-height: 1.3;
-      max-width: 40rem;
-      margin: 1.4rem 0 0;
-    }
-    .lede {
-      max-width: 40rem;
-      margin: 1rem 0 0;
-      color: var(--muted);
-    }
-    .hero-links { display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; margin-top: 1.4rem; }
-    .hero-links a { font-size: 0.95rem; }
+    section.block { padding: 100px 0; border-top: 1px solid var(--line); }
+    .sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+    .sec-label { font: 600 11.5px var(--mono); letter-spacing: 1.6px; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
+    .sec-head h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -1.2px; line-height: 1.1; font-weight: 800; }
+    .sec-head p { color: var(--text-2); max-width: 420px; font-size: 15px; }
 
-    .block { padding: 3rem 0; border-bottom: 1px solid var(--line); }
-    .block h2 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin: 0.35rem 0 1.2rem;
-      max-width: 22ch;
-    }
+    .about { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: start; }
+    .about p { color: var(--text-2); font-size: 16px; margin-bottom: 14px; }
+    .about p strong { color: var(--text); font-weight: 600; }
+    .highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .hl { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+    .hl b { display: block; font-size: 22px; letter-spacing: -.4px; margin-bottom: 4px; }
+    .hl small { display: block; color: var(--text-3); font-size: 12.5px; line-height: 1.4; }
+    .perfil-link { display: inline-flex; margin-top: 22px; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; border-bottom: 1px solid var(--line-2); padding-bottom: 2px; }
+    .perfil-link:hover { border-color: var(--accent); }
 
-    #perfil {
-      background: var(--bg-2);
-      margin-top: 2rem;
-      padding: 2rem 1.4rem 2.2rem;
-      border: 1px solid var(--line);
-      border-top: 4px solid var(--copper);
-    }
-    #perfil .prose { max-width: 42rem; }
-    #perfil p { margin: 0 0 1rem; }
-    .facts {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-      margin: 1.5rem 0 1.2rem;
-    }
-    .facts div { background: var(--soft); padding: 0.9rem 0.85rem 1rem; }
-    .facts strong {
-      display: block;
-      font-family: var(--serif);
-      font-size: 1.8rem;
-      font-weight: 400;
-      letter-spacing: -0.03em;
-      line-height: 1;
-    }
-    .facts span { display: block; margin-top: 0.4rem; color: var(--muted); font-size: 0.86rem; line-height: 1.35; }
-    .perfil-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      margin-top: 0.3rem;
-      padding: 0.55rem 0.85rem;
-      border: 1px solid var(--copper);
-      background: var(--bg);
-      color: var(--copper-deep);
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-    .perfil-link:hover { background: var(--copper); color: #fffdf8; }
+    .timeline { position: relative; display: grid; gap: 28px; padding-left: 24px; }
+    .timeline::before { content: ""; position: absolute; left: 4px; top: 12px; bottom: 6px; width: 1px; background: var(--line-2); }
+    .job { position: relative; }
+    .job::before { content: ""; position: absolute; left: -25.5px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--text-2); }
+    .job.atual::before { background: var(--accent); border-color: var(--accent); }
+    .job.atual::after { content: ""; position: absolute; left: -25.5px; top: 6px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent); background: var(--accent); animation: pulso 1.8s ease-out infinite; pointer-events: none; }
+    .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .job h3 { font-size: 17px; line-height: 24px; }
+    .job .when { font: 500 12px var(--mono); color: var(--text-3); }
+    .job .when.agora { color: var(--accent); font-weight: 600; }
+    .job .role { color: var(--text-2); font-size: 13.5px; margin: 2px 0 10px; }
+    .job ul { list-style: none; display: grid; gap: 6px; }
+    .job li { font-size: 14px; color: var(--text-2); display: grid; grid-template-columns: 20px 1fr; }
+    .job li::before { content: "—"; color: var(--text-3); }
 
-    .role {
-      display: grid;
-      grid-template-columns: 11.5rem 1fr;
-      gap: 0.4rem 1.5rem;
-      padding: 1.35rem 0;
-      border-top: 1px solid var(--line);
-    }
-    .role:first-of-type { border-top: 0; }
-    .role-when {
-      margin: 0;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.02em;
-      color: var(--muted);
-    }
-    .role h3 { margin: 0; font-size: 1.15rem; font-weight: 650; letter-spacing: -0.01em; }
-    .role-where { margin: 0.15rem 0 0.55rem; color: var(--muted); }
-    .role ul { margin: 0; padding-left: 1.1rem; }
-    .role li { margin: 0.28rem 0; }
-    .tag {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--copper);
-      margin-bottom: 0.25rem;
-    }
+    .hist { list-style: none; margin-top: 36px; border-top: 1px solid var(--line); }
+    .hist li { display: grid; grid-template-columns: 190px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--text-2); font-size: 14px; }
+    .hist .when { font: 500 12px var(--mono); color: var(--text-3); }
+    .hist strong { color: var(--text); }
 
-    .hist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-    .hist li {
-      display: grid;
-      grid-template-columns: 12.5rem 1fr;
-      gap: 0.3rem 1rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .hist .when { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
-    .subh {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--copper);
-      margin: 2rem 0 0.6rem;
-    }
+    .pilares { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .pilar { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+    .pilar .n { font-family: var(--mono); color: var(--accent); font-size: 12px; }
+    .pilar h3 { font-size: 17px; margin: 6px 0 8px; letter-spacing: -.2px; }
+    .pilar p { color: var(--text-2); font-size: 14.5px; }
+    .ganhos { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .ganho { border-top: 2px solid var(--line-2); padding-top: 14px; }
+    .ganho .num { display: block; font-size: 26px; font-weight: 800; letter-spacing: -.02em; color: var(--accent); margin-bottom: 6px; }
+    .ganho b { display: block; font-size: 15px; margin-bottom: 4px; }
+    .ganho small { color: var(--text-2); font-size: 13.5px; line-height: 1.5; display: block; }
 
-    .practices {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem 2rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .practices li { border-top: 1px solid var(--line); padding-top: 0.8rem; }
-    .practices .n {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--copper);
-    }
-    .practices h3 { margin: 0.2rem 0 0.35rem; font-size: 1.05rem; }
-    .practices p { margin: 0; color: var(--muted); }
+    .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .project { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 12px; transition: border-color .25s; }
+    .project:hover { border-color: var(--line-2); }
+    .p-kind { font: 600 11px var(--mono); letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-3); }
+    .project h3 { font-size: 24px; letter-spacing: -.6px; line-height: 1.15; }
+    .project p { color: var(--text-2); font-size: 15px; }
+    .nota { margin-top: 18px; color: var(--text-3); font-size: 13px; }
 
-    .cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .card {
-      background: var(--bg-2);
-      border: 1px solid var(--line);
-      padding: 1.1rem 1.15rem 1.2rem;
-    }
-    .card h3 { margin: 0.25rem 0 0.4rem; font-size: 1.12rem; }
-    .card p { margin: 0; color: var(--muted); }
-    .card .meta { font-family: var(--mono); font-size: 0.75rem; color: var(--copper); margin: 0; }
-    .note { color: var(--muted); font-size: 0.92rem; margin-top: 1rem; }
+    .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .skill-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .sk-head h3 { font-size: 15.5px; letter-spacing: -.2px; }
+    .sk-head small { display: block; color: var(--text-3); font-size: 12px; margin-top: 2px; }
+    .sk-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .sk-tags span { font-size: 13px; padding: 6px 11px; border-radius: 8px; background: var(--card-2); border: 1px solid var(--line-2); color: var(--text-2); }
+    .creds { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .edu { display: grid; gap: 10px; }
+    .edu-item { padding: 14px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+    .edu-item b { display: block; font-size: 14.5px; line-height: 1.35; }
+    .edu-item small { color: var(--text-3); font-size: 12.5px; }
+    .cert-grid { display: grid; gap: 10px; }
+    .cert { padding: 12px 14px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+    .cert b { display: block; font-size: 13.5px; line-height: 1.35; font-weight: 600; }
+    .cert small { color: var(--text-3); font-size: 12px; }
 
-    .groups {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.4rem 2rem;
-    }
-    .groups h3 { margin: 0 0 0.45rem; font-size: 1.02rem; }
-    .groups h3.follow { margin-top: 1.2rem; }
-    .groups ul { margin: 0; padding-left: 1.1rem; }
-    .groups li { margin: 0.18rem 0; }
-    #formacao { margin-top: 1.6rem; }
-    .edu { list-style: none; margin: 0; padding: 0; }
-    .edu li { padding: 0.7rem 0; border-top: 1px solid var(--line); }
-    .edu strong { display: block; }
-    .edu span { color: var(--muted); }
+    .contact { padding: 110px 0; border-top: 1px solid var(--line); }
+    .contact-card { display: grid; grid-template-columns: 1.1fr .9fr; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: var(--bg-2); }
+    .contact-main { position: relative; overflow: hidden; padding: 48px; background: radial-gradient(500px 260px at 0% 0%, rgba(var(--accent-rgb), .07), transparent 70%); }
+    .contact h2 { font-size: clamp(32px, 4.6vw, 48px); letter-spacing: -1.6px; line-height: 1.05; font-weight: 800; margin-bottom: 16px; }
+    .contact-main > p { color: var(--text-2); max-width: 440px; margin-bottom: 28px; }
+    .modos { display: grid; gap: 10px; }
+    .modo { display: flex; align-items: center; gap: 14px; padding: 13px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(10,10,10,.6); }
+    .modo b { display: block; font-size: 14.5px; }
+    .modo small { color: var(--text-3); font-size: 12.5px; }
+    .contact-links { border-left: 1px solid var(--line); display: flex; flex-direction: column; }
+    .c-link { display: flex; align-items: center; gap: 16px; padding: 22px 28px; border-bottom: 1px solid var(--line); flex: 1; transition: background .2s; }
+    .c-link:last-child { border-bottom: none; }
+    .c-link:hover { background: var(--card); }
+    .c-txt small { display: block; font: 600 10.5px var(--mono); letter-spacing: 1.4px; text-transform: uppercase; color: var(--text-3); margin-bottom: 3px; }
+    .c-txt b { font-size: 15px; font-weight: 600; word-break: break-all; }
+    .seta { margin-left: auto; color: var(--text-3); font-size: 18px; }
+    footer { border-top: 1px solid var(--line); padding: 26px 0; color: var(--text-3); font-size: 13px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
-    #contato { border-bottom: 0; }
-    .contact-list { list-style: none; margin: 0; padding: 0; max-width: 36rem; }
-    .contact-list li {
-      display: grid;
-      grid-template-columns: 7.5rem 1fr;
-      gap: 0.5rem;
-      padding: 0.75rem 0;
-      border-top: 1px solid var(--line);
+    @media (max-width: 900px) {
+      .hero-grid, .about, .creds, .contact-card, .pilares { grid-template-columns: 1fr; }
+      .ganhos, .projects { grid-template-columns: 1fr 1fr; }
+      .contact-links { border-left: none; border-top: 1px solid var(--line); }
+      .hero-pola { rotate: 0deg; margin-top: 12px; }
     }
-    .contact-list li:last-child { border-bottom: 1px solid var(--line); }
-    .contact-list .lbl {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding-top: 0.2rem;
-    }
-    footer {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 1.25rem 2.5rem;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    @media (max-width: 800px) {
-      .menu-btn { display: inline-flex; }
-      #menu {
-        display: none;
-        position: absolute;
-        top: var(--header);
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.2rem;
-        padding: 0.6rem 1.25rem 1rem;
-        background: var(--bg);
-        border-bottom: 1px solid var(--line);
-      }
-      #menu.is-open { display: flex; }
-      #menu a { padding: 0.45rem 0; }
-      .facts, .practices, .cards, .groups { grid-template-columns: 1fr; }
-      .role, .hist li, .contact-list li { grid-template-columns: 1fr; }
-      #perfil { margin-left: -1.25rem; margin-right: -1.25rem; border-left: 0; border-right: 0; }
+    @media (max-width: 680px) {
+      .wrap { padding: 0 16px; }
+      .menu { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--bg); border-bottom: 1px solid var(--line); padding: 10px 16px 16px; }
+      .menu.open { display: flex; }
+      .menu a { padding: 11px 14px; }
+      .menu-btn { display: block; }
+      .otw span { display: none; }
+      .skills, .highlights, .ganhos, .projects, .hist li { grid-template-columns: 1fr; }
+      section.block { padding: 72px 0; }
+      .hero { padding-top: 96px; }
+      .contact { padding: 72px 0; }
+      .contact-main { padding: 30px 22px; }
+      .c-link { padding: 20px 22px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
+      .otw i::after, .job.atual::after { animation: none; }
     }
   </style>
 </head>
 <body>
-  <a class="skip" href="#perfil">Ir para o perfil</a>
-  <header class="top">
-    <a class="brand" href="#inicio">Alain Ageev</a>
-    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
-    <nav id="menu" aria-label="Seções">
-      <a href="#inicio">Início</a>
-      <a href="#perfil">Perfil</a>
-      <a href="#atuacao">Como atuo</a>
-      <a href="#projetos">Projetos</a>
-      <a href="#competencias">Competências</a>
-      <a href="#contato">Contato</a>
-      <a class="ext" href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </nav>
+  <a class="skip" href="#inicio">Ir para o início</a>
+  <nav class="nav" id="nav">
+    <div class="wrap">
+      <a href="#inicio" class="brand"><span class="brand-mark">AA</span>Alain Ageev</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">☰</button>
+      <div class="menu" id="menu">
+        <a href="#inicio">Início</a>
+        <a href="#perfil">Perfil</a>
+        <a href="#atuacao">Como atuo</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#competencias">Competências</a>
+        <a href="#contato" class="cta"><span class="nav-dot"></span>Contato</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="inicio">
+    <canvas id="grade" aria-hidden="true"></canvas>
+    <div class="wrap hero-grid">
+      <div>
+        <a class="otw" href="#atuacao"><i></i><b>Soultech Solutions</b><span>desde março de 2026 · São Paulo</span></a>
+        <div class="eyebrow">Advisor · Qualidade · Risco · Compliance</div>
+        <h1>Governança em TI<br>na Soultech Solutions,<br><span class="dim">qualidade, risco e compliance.</span></h1>
+        <p class="lead">Consultor de <strong>Transformação Digital e Processos</strong> na Soultech Solutions, em São Paulo, desde março de 2026. Antes, <strong>governança de qualidade</strong> na Unidas e <strong>QA Leader</strong> na Brasilprev. Testes de software desde <strong>2007</strong>.</p>
+        <div class="disp" aria-label="Onde atuo">
+          <span>São Paulo, na função atual</span>
+          <span>Brasil</span>
+          <span>Português nativo</span>
+        </div>
+        <div class="actions">
+          <a class="btn btn-solid" href="#perfil">Conheça meu perfil →</a>
+          <a class="btn" href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+        <div class="tags">
+          <span class="tag">Governança</span>
+          <span class="tag">TMMi</span>
+          <span class="tag">Azure DevOps</span>
+          <span class="tag">RCA</span>
+          <span class="tag">Scrum</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Salesforce</span>
+          <span class="tag">Selenium</span>
+        </div>
+      </div>
+      <figure class="hero-pola" aria-label="Alain Ageev, governança em TI">
+        <div class="hero-sheet">
+          <div class="aa">AA</div>
+          <p class="who">Consultor de Transformação Digital e Processos</p>
+          <div class="hero-nums">
+            <div><b>40</b><span>squads na Unidas</span></div>
+            <div><b>38%</b><span>ouvidoria em 3 anos, Brasilprev</span></div>
+            <div><b>2007</b><span>início em testes de software</span></div>
+          </div>
+        </div>
+        <figcaption>Alain Ageev</figcaption>
+      </figure>
+    </div>
   </header>
 
   <main>
-    <header id="inicio">
-      <p class="kicker">Brasil</p>
-      <h1>Alain Ageev</h1>
-      <p class="creds">SFC · Lean Six Sigma</p>
-      <p class="headline">Governança em TI na Soultech Solutions | Advisor | Qualidade | Risco | Compliance</p>
-      <p class="lede">Consultor de Transformação Digital e Processos na Soultech Solutions, em São Paulo, desde março de 2026. Antes disso, governança de qualidade na Unidas e QA Leader na Brasilprev. Testes de software desde 2007.</p>
-      <p class="hero-links">
-        <a href="#perfil">Perfil</a>
-        <a href="#atuacao">Experiência</a>
-        <a href="mailto:alainageev@gmail.com">alainageev@gmail.com</a>
-      </p>
-    </header>
-
-    <section class="block" id="perfil" aria-labelledby="perfil-titulo">
-      <p class="kicker">Perfil</p>
-      <h2 id="perfil-titulo">Padrão de qualidade, risco e a implantação que foi vendida.</h2>
-      <div class="prose">
-        <p>Sou consultor de governança em TI na Soultech Solutions. Desde março de 2026 conduzo a oferta e a entrega no mesmo fluxo: identificação de oportunidades, proposta técnico-comercial, site institucional, estruturação de CRM e automação de processos comerciais e operacionais. Tenho a certificação Scrum Foundations Professional Certificate (SFPC).</p>
-        <p>Na Unidas, de outubro de 2024 a janeiro de 2026, estruturei padrões de qualidade e testes funcionais e não funcionais em 40 squads, com foco em segurança e compliance, e liderei o ciclo TMMi — diagnóstico, plano de ação, implementação, verificação e melhoria contínua. Facilitei dailies, plannings, reviews e retrospectivas em 20 squads e conduzi o onboarding de 4 analistas. Na Brasilprev, como QA Leader da área DXLAB (20 squads), de setembro de 2020 a janeiro de 2024, a gestão de reclamações e ouvidoria reduziu em 38% o número de reclamações em três anos. As ferramentas dessa gestão foram Azure DevOps, ITSM, Power BI, Power Automate, Salesforce e SharePoint.</p>
-        <p>A trajetória em testes começa em 2007, na Nextel. Selenium IDE e Selenium WebDriver aparecem no CESAR e na FAST; Quality Center e Quick Test, na atualização do SAP 4.6 para 6.0, na Mispa, cliente ATOS/Siemens. MBA em digital business pela USP/Esalq, de março de 2024 a dezembro de 2026. Português nativo.</p>
-      </div>
-      <div class="facts">
-        <div>
-          <strong>40</strong>
-          <span>squads com padrão de qualidade e teste na Unidas</span>
+    <section class="block" id="perfil">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="sec-label">Perfil</p>
+            <h2>Padrão de qualidade, risco e a implantação que foi vendida.</h2>
+          </div>
+          <p>Governança de TI na Soultech Solutions, com a trajetória de teste e de liderança de qualidade que vem antes.</p>
         </div>
-        <div>
-          <strong>38%</strong>
-          <span>menos reclamações de ouvidoria em 3 anos na Brasilprev</span>
-        </div>
-        <div>
-          <strong>20</strong>
-          <span>squads com ritos ágeis na Unidas</span>
-        </div>
-        <div>
-          <strong>4</strong>
-          <span>analistas no onboarding conduzido na Unidas</span>
+        <div class="about">
+          <div>
+            <p>Sou consultor de governança em TI na <strong>Soultech Solutions</strong>. Desde março de 2026 conduzo a oferta e a entrega no mesmo fluxo: identificação de oportunidades, proposta técnico-comercial, site institucional, estruturação de CRM e automação de processos comerciais e operacionais. Tenho a certificação <strong>Scrum Foundations Professional Certificate (SFPC)</strong>.</p>
+            <p>Na <strong>Unidas</strong>, de outubro de 2024 a janeiro de 2026, estruturei padrões de qualidade e testes funcionais e não funcionais em 40 squads, com foco em segurança e compliance, e liderei o ciclo TMMi — diagnóstico, plano de ação, implementação, verificação e melhoria contínua. Facilitei dailies, plannings, reviews e retrospectivas em 20 squads e conduzi o onboarding de 4 analistas. Na <strong>Brasilprev</strong>, como QA Leader da área DXLAB (20 squads), de setembro de 2020 a janeiro de 2024, a gestão de reclamações e ouvidoria reduziu em 38% o número de reclamações em três anos. As ferramentas dessa gestão foram Azure DevOps, ITSM, Power BI, Power Automate, Salesforce e SharePoint.</p>
+            <p>A trajetória em testes começa em 2007, na Nextel. Selenium IDE e Selenium WebDriver aparecem no CESAR e na FAST; Quality Center e Quick Test, na atualização do SAP 4.6 para 6.0, na Mispa, cliente ATOS/Siemens. MBA em digital business pela USP/Esalq, de março de 2024 a dezembro de 2026. Português nativo.</p>
+            <a class="perfil-link" href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">LinkedIn · linkedin.com/in/alainageev</a>
+          </div>
+          <div class="highlights">
+            <div class="hl"><b>40</b><small>squads com padrão de qualidade e teste na Unidas</small></div>
+            <div class="hl"><b>38%</b><small>menos reclamações de ouvidoria em 3 anos na Brasilprev</small></div>
+            <div class="hl"><b>20</b><small>squads com ritos ágeis na Unidas</small></div>
+            <div class="hl"><b>4</b><small>analistas no onboarding conduzido na Unidas</small></div>
+          </div>
         </div>
       </div>
-      <a class="perfil-link" href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">LinkedIn · linkedin.com/in/alainageev</a>
     </section>
 
-    <section class="block" id="atuacao" aria-labelledby="atuacao-titulo">
-      <p class="kicker">Como atuo</p>
-      <h2 id="atuacao-titulo">Experiência</h2>
-
-      <article class="role">
-        <p class="role-when"><span class="tag">Atual</span><br>mar/2026 – atual<br>São Paulo</p>
-        <div>
-          <h3>Consultor de Transformação Digital e Processos</h3>
-          <p class="role-where">Soultech Solutions</p>
-          <ul>
-            <li>Identifico oportunidades, conduzo vendas consultivas e elaboro propostas técnico-comerciais a partir da necessidade do cliente.</li>
-            <li>Levanto requisitos, defino escopo e alinho a solução ao objetivo do negócio.</li>
-            <li>Acompanho o desenvolvimento e a atualização de sites institucionais, considerando experiência de uso, comunicação e objetivo comercial.</li>
-            <li>Estruturo o CRM: informação comercial, gestão de contatos e o acompanhamento de oportunidades.</li>
-            <li>Identifico automação de atividades comerciais e operacionais para reduzir tarefa manual.</li>
-            <li>Acompanho escopo, prazos, atividades, dependências e entregáveis até a execução.</li>
-            <li>Alinho expectativa com clientes e stakeholders na implantação e no suporte à entrega.</li>
-          </ul>
+    <section class="block" id="atuacao">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="sec-label">Como atuo</p>
+            <h2>Experiência</h2>
+          </div>
+          <p>O cargo atual é na Soultech Solutions. Unidas, Brasilprev e WATI vêm em seguida. Os cargos anteriores ficam em uma linha.</p>
         </div>
-      </article>
-
-      <article class="role">
-        <p class="role-when">out/2024 – jan/2026<br>1 ano e 4 meses<br>São Paulo</p>
-        <div>
-          <h3>Consultor de governança em TI</h3>
-          <p class="role-where">Unidas</p>
-          <ul>
-            <li>Estruturei e apliquei padrões de qualidade e testes funcionais e não funcionais, alinhados a normas de mercado e ao negócio, com foco em segurança e compliance, em 40 squads.</li>
-            <li>Liderei o TMMi (Test Maturity Model Integration) no ciclo completo: diagnóstico da maturidade, plano de ação, implementação, verificação e melhoria contínua, com elevação do nível de maturidade dos processos de teste.</li>
-            <li>Desenvolvi KPIs de performance de QA e conduzi relatórios e FUPs de processos críticos para a liderança de TI.</li>
-            <li>Mapeei riscos, falhas, oportunidades e ameaças aos processos e, com Release Management e Gestão de Incidentes, conduzi análises de causa raiz (RCA) e a disseminação dos aprendizados.</li>
-            <li>Removi impedimentos no setup de ambientes de desenvolvimento, encurtando o tempo de entrega.</li>
-            <li>Facilitei dailies, plannings, reviews e retrospectivas em 20 squads.</li>
-            <li>Apoiei o time de QA com mentorias, feedbacks, PDIs e o onboarding de 4 novos analistas.</li>
-          </ul>
+        <div class="timeline">
+          <article class="job atual">
+            <div class="job-head">
+              <h3>Soultech Solutions</h3>
+              <span class="when agora">mar/2026 – atual · São Paulo</span>
+            </div>
+            <p class="role">Consultor de Transformação Digital e Processos</p>
+            <ul>
+              <li>Identifico oportunidades, conduzo vendas consultivas e elaboro propostas técnico-comerciais a partir da necessidade do cliente.</li>
+              <li>Levanto requisitos, defino escopo e alinho a solução ao objetivo do negócio.</li>
+              <li>Acompanho o desenvolvimento e a atualização de sites institucionais, considerando experiência de uso, comunicação e objetivo comercial.</li>
+              <li>Estruturo o CRM: informação comercial, gestão de contatos e o acompanhamento de oportunidades.</li>
+              <li>Identifico automação de atividades comerciais e operacionais para reduzir tarefa manual.</li>
+              <li>Acompanho escopo, prazos, atividades, dependências e entregáveis até a execução.</li>
+              <li>Alinho expectativa com clientes e stakeholders na implantação e no suporte à entrega.</li>
+            </ul>
+          </article>
+          <article class="job">
+            <div class="job-head">
+              <h3>Unidas</h3>
+              <span class="when">out/2024 – jan/2026 · 1 ano e 4 meses · São Paulo</span>
+            </div>
+            <p class="role">Consultor de governança em TI</p>
+            <ul>
+              <li>Estruturei e apliquei padrões de qualidade e testes funcionais e não funcionais, alinhados a normas de mercado e ao negócio, com foco em segurança e compliance, em 40 squads.</li>
+              <li>Liderei o TMMi (Test Maturity Model Integration) no ciclo completo: diagnóstico da maturidade, plano de ação, implementação, verificação e melhoria contínua, com elevação do nível de maturidade dos processos de teste.</li>
+              <li>Desenvolvi KPIs de performance de QA e conduzi relatórios e FUPs de processos críticos para a liderança de TI.</li>
+              <li>Mapeei riscos, falhas, oportunidades e ameaças aos processos e, com Release Management e Gestão de Incidentes, conduzi análises de causa raiz (RCA) e a disseminação dos aprendizados.</li>
+              <li>Removi impedimentos no setup de ambientes de desenvolvimento, encurtando o tempo de entrega.</li>
+              <li>Facilitei dailies, plannings, reviews e retrospectivas em 20 squads.</li>
+              <li>Apoiei o time de QA com mentorias, feedbacks, PDIs e o onboarding de 4 novos analistas.</li>
+            </ul>
+          </article>
+          <article class="job">
+            <div class="job-head">
+              <h3>Brasilprev Seguros e Previdência S.A.</h3>
+              <span class="when">set/2020 – jan/2024 · 3 anos e 5 meses · São Paulo</span>
+            </div>
+            <p class="role">QA Leader</p>
+            <ul>
+              <li>Tratei reclamações e ouvidoria da área DXLAB (20 squads) e reduzi em 38% o número de reclamações em 3 anos.</li>
+              <li>Padronizei a qualidade de serviço entre áreas clientes por meio de análise de parecer técnico.</li>
+              <li>Gerenciei projetos, iniciativas estratégicas e riscos, com manutenção de metodologias, processos e ferramentas: Azure DevOps, ITSM, Power BI, Power Automate, Salesforce e SharePoint.</li>
+              <li>Acompanhei a qualidade e o prazo das entregas do time.</li>
+              <li>Atuei como avaliador técnico de novos analistas de testes para as squads.</li>
+              <li>Conduzi avaliação de desempenho, feedback e reuniões periódicas de desenvolvimento, a partir de feedbacks formais e informais de clientes internos.</li>
+            </ul>
+          </article>
+          <article class="job">
+            <div class="job-head">
+              <h3>WATI Consultoria</h3>
+              <span class="when">fev/2020 – set/2020 · 8 meses · Recife</span>
+            </div>
+            <p class="role">Team Lead · cliente MV, sistemas hospitalares</p>
+            <ul>
+              <li>Planejei, orientei e monitorei as entregas dos analistas de teste.</li>
+              <li>Fui referência técnica do time e tratei impedimentos e conflitos que afetavam a execução.</li>
+              <li>Liderei testes e controle de qualidade alinhados à necessidade dos usuários de sistemas hospitalares.</li>
+              <li>Dimensionei a capacidade da equipe para sustentar o volume de entregas.</li>
+            </ul>
+          </article>
         </div>
-      </article>
-
-      <article class="role">
-        <p class="role-when">set/2020 – jan/2024<br>3 anos e 5 meses<br>São Paulo</p>
-        <div>
-          <h3>QA Leader</h3>
-          <p class="role-where">Brasilprev Seguros e Previdência S.A.</p>
-          <ul>
-            <li>Tratei reclamações e ouvidoria da área DXLAB (20 squads) e reduzi em 38% o número de reclamações em 3 anos.</li>
-            <li>Padronizei a qualidade de serviço entre áreas clientes por meio de análise de parecer técnico.</li>
-            <li>Gerenciei projetos, iniciativas estratégicas e riscos, com manutenção de metodologias, processos e ferramentas: Azure DevOps, ITSM, Power BI, Power Automate, Salesforce e SharePoint.</li>
-            <li>Acompanhei a qualidade e o prazo das entregas do time.</li>
-            <li>Atuei como avaliador técnico de novos analistas de testes para as squads.</li>
-            <li>Conduzi avaliação de desempenho, feedback e reuniões periódicas de desenvolvimento, a partir de feedbacks formais e informais de clientes internos.</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="role">
-        <p class="role-when">fev/2020 – set/2020<br>8 meses<br>Recife</p>
-        <div>
-          <h3>Team Lead</h3>
-          <p class="role-where">WATI Consultoria · cliente MV, sistemas hospitalares</p>
-          <ul>
-            <li>Planejei, orientei e monitorei as entregas dos analistas de teste.</li>
-            <li>Fui referência técnica do time e tratei impedimentos e conflitos que afetavam a execução.</li>
-            <li>Liderei testes e controle de qualidade alinhados à necessidade dos usuários de sistemas hospitalares.</li>
-            <li>Dimensionei a capacidade da equipe para sustentar o volume de entregas.</li>
-          </ul>
-        </div>
-      </article>
-
-      <h3 class="subh">Cargos anteriores</h3>
-      <ul class="hist">
-        <li>
-          <span class="when">jun/2017 – fev/2020<br>Recife · 2 anos e 9 meses</span>
-          <span><strong>Montreal Oficial.</strong> Líder de equipe e instrutor (ago/2019 – fev/2020): implantação do SEI na Secretaria Estadual de Saúde de Pernambuco, com treinamento e gestão da mudança. Analista de Sistemas e requisito (jan/2019 – ago/2019): requisitos funcionais e não funcionais da SES com os usuários. Engenheiro QA (jun/2017 – jan/2019): estratégia, casos, massa de teste, testes funcionais, integrados, de regressão e de aceitação, defeitos e gestão de configuração.</span>
-        </li>
-        <li>
-          <span class="when">nov/2015 – ago/2016<br>Recife e região</span>
-          <span><strong>Solloweb · Sales Consultant.</strong> Projeto Expansão Nordeste: análise de mercado, prospecção, feedback de produto e reestruturação do site institucional, com levantamento de requisitos, validação funcional e testes. A função também cobre marketing digital e QA.</span>
-        </li>
-        <li>
-          <span class="when">abr/2015 – out/2015<br>Brasil</span>
-          <span><strong>Emprego.net · QA Test Engineer.</strong> Testes funcionais, cenários, casos de teste e homologação na plataforma nacional de empregos.</span>
-        </li>
-        <li>
-          <span class="when">out/2012 – mar/2015<br>Recife</span>
-          <span><strong>CESAR · Software Test Engineer.</strong> Testes funcionais e exploratórios na Rapidão Cometa (atual FedEx Brasil), massa de dados em banco e gestão de defeitos. Grupo de estudos de automação com Selenium IDE e Selenium WebDriver.</span>
-        </li>
-        <li>
-          <span class="when">fev/2012 – out/2012<br>Recife e região</span>
-          <span><strong>FAST - Soluções Tecnológicas · Software Test Engineer.</strong> Testes em aplicações web e automação funcional com Selenium IDE, massa de dados e gestão de defeitos.</span>
-        </li>
-        <li>
-          <span class="when">nov/2011 – mar/2012<br>Atos - Lapa</span>
-          <span><strong>Mispa Consultoria e Sistemas Ltda · SQA Analyst / Automation Test.</strong> Cliente ATOS/Siemens. Testes de desempenho no Quality Center e cenários automatizados no Quick Test, na atualização do SAP 4.6 para 6.0.</span>
-        </li>
-        <li>
-          <span class="when">set/2010 – out/2011<br>São Paulo e região</span>
-          <span><strong>AgenciaClick Isobar · QA Analyst.</strong> Planejamento e execução de testes, massa de dados e gestão de bugs em sites, jogos, hotsites, smartphones e fanpages.</span>
-        </li>
-        <li>
-          <span class="when">nov/2009 – ago/2010<br>São Paulo e região</span>
-          <span><strong>ATECH – Negócios em Tecnologia S/A · Test Analyst.</strong> Sistema Java de gestão de procedimentos e custos hospitalares, com metodologias ágeis, histórias de teste, ambientes de teste e release (build e deploy).</span>
-        </li>
-        <li>
-          <span class="when">jul/2009 – out/2009<br>São Paulo e região</span>
-          <span><strong>CPqD Technologies &amp; Systems, Inc. · Test Analyst.</strong> Testes na integração dos sistemas do Santander e do Unibanco, com massa de dados e gestão de defeitos.</span>
-        </li>
-        <li>
-          <span class="when">fev/2008 – jun/2009<br>São Paulo e região</span>
-          <span><strong>F5 Web Design e Tecnologia Atualizada · Test Analyst.</strong> Testes em sites, jogos, hotsites e mobile, com massa de dados e gestão de defeitos.</span>
-        </li>
-        <li>
-          <span class="when">jan/2007 – jan/2008<br>São Paulo e região</span>
-          <span><strong>Nextel Telecomunicações Ltda · Test Analyst.</strong> Plano de testes em aplicações web e em financiamento Oracle, incluindo a fase de pré-teste e a integração com o desenvolvimento.</span>
-        </li>
-        <li>
-          <span class="when">fev/2006 – dez/2006<br>São Paulo e região</span>
-          <span><strong>UOL · Analyst Support.</strong> Prestação de serviços pela G&amp;P. Suporte ao cliente em conexão e instalação: TCP/IP, ADSL, e-mail e navegadores.</span>
-        </li>
-        <li>
-          <span class="when">mai/2003 – nov/2004<br>Osasco</span>
-          <span><strong>Bradesco · Telemarketing operator.</strong> Atendimento de cartão de crédito e conta corrente em call center, com orientação sobre o sistema bancário e venda passiva e ativa de pacotes.</span>
-        </li>
-      </ul>
-    </section>
-
-    <section class="block" id="ponte" aria-labelledby="ponte-titulo">
-      <p class="kicker">Prática</p>
-      <h2 id="ponte-titulo">O que entra no trabalho, no detalhe.</h2>
-      <ol class="practices">
-        <li>
-          <span class="n">01 · padrão</span>
-          <h3>Qualidade, segurança e compliance na escala da operação</h3>
-          <p>Na Unidas, o padrão de teste funcional e não funcional valeu para 40 squads, alinhado a norma de mercado e ao negócio.</p>
-        </li>
-        <li>
-          <span class="n">02 · maturidade</span>
-          <h3>TMMi no ciclo inteiro</h3>
-          <p>Diagnóstico da maturidade, plano de ação, implementação, verificação e melhoria contínua, com elevação do nível de maturidade dos processos de teste.</p>
-        </li>
-        <li>
-          <span class="n">03 · indicador</span>
-          <h3>KPI e FUP para a liderança</h3>
-          <p>Indicadores de performance de QA e acompanhamento de processos críticos, para a decisão de TI na Unidas.</p>
-        </li>
-        <li>
-          <span class="n">04 · causa</span>
-          <h3>RCA com release e incidente</h3>
-          <p>Riscos e falhas mapeados com Release Management e Gestão de Incidentes, com a causa raiz disseminada para evitar falha recorrente.</p>
-        </li>
-        <li>
-          <span class="n">05 · time</span>
-          <h3>Rito ágil, mentoria e onboarding</h3>
-          <p>Dailies, plannings, reviews e retrospectivas em 20 squads na Unidas. Mentorias, feedback, PDI e o onboarding de 4 analistas.</p>
-        </li>
-        <li>
-          <span class="n">06 · entrega</span>
-          <h3>Da proposta à implantação</h3>
-          <p>Na Soultech Solutions, a mesma frente vende e implanta: site institucional, CRM e automação de processo, com escopo, prazo e entregável acompanhados.</p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="block" id="projetos" aria-labelledby="projetos-titulo">
-      <p class="kicker">Projetos</p>
-      <h2 id="projetos-titulo">Frentes com nome na trajetória.</h2>
-      <div class="cards">
-        <article class="card">
-          <p class="meta">Soultech Solutions · mar/2026 – atual</p>
-          <h3>Sites, CRM e automações</h3>
-          <p>Frente em execução: venda consultiva, proposta, acompanhamento de site institucional, estruturação de CRM e automação de atividades comerciais e operacionais.</p>
-        </article>
-        <article class="card">
-          <p class="meta">Montreal Oficial · ago/2019 – fev/2020 · Recife</p>
-          <h3>SEI na SES-PE</h3>
-          <p>Liderança da implantação do Sistema Eletrônico de Informações na Secretaria Estadual de Saúde de Pernambuco: treinamento, materiais, turmas e gestão da mudança. O órgão registrou a maior velocidade de implantação entre os do Governo de Pernambuco, e o modelo foi replicado por outros órgãos.</p>
-        </article>
-        <article class="card">
-          <p class="meta">CESAR · out/2012 – mar/2015 · Recife</p>
-          <h3>Rapidão Cometa</h3>
-          <p>Testes funcionais e exploratórios no projeto da Rapidão Cometa, atual FedEx Brasil. Massa de dados em banco, gestão de defeitos e estudo de Selenium IDE e Selenium WebDriver.</p>
-        </article>
-        <article class="card">
-          <p class="meta">Mispa · nov/2011 – mar/2012 · cliente ATOS/Siemens</p>
-          <h3>SAP 4.6 para 6.0</h3>
-          <p>Testes de desempenho no Quality Center e cenários automatizados no Quick Test, na atualização de versão do SAP.</p>
-        </article>
-        <article class="card">
-          <p class="meta">CPqD · jul/2009 – out/2009</p>
-          <h3>Santander e Unibanco</h3>
-          <p>Testes na integração entre os sistemas do Santander e do Unibanco, com massa de dados e gestão de defeitos.</p>
-        </article>
-        <article class="card">
-          <p class="meta">Solloweb · nov/2015 – ago/2016 · Recife e região</p>
-          <h3>Expansão Nordeste</h3>
-          <p>Análise de mercado, prospecção e reestruturação do site institucional, com requisitos, validação funcional e testes de qualidade.</p>
-        </article>
-      </div>
-      <p class="note">Não há repositório público ligado a estas frentes. Os nomes saem do currículo, não de um perfil no GitHub.</p>
-    </section>
-
-    <section class="block" id="competencias" aria-labelledby="comp-titulo">
-      <p class="kicker">Competências</p>
-      <h2 id="comp-titulo">Ferramentas, prática e formação.</h2>
-      <div class="groups">
-        <div>
-          <h3>Governança e teste</h3>
-          <ul>
-            <li>Governança de TI, padrões de qualidade, segurança e compliance</li>
-            <li>Testes funcionais e não funcionais, exploratórios, de integração, de regressão, de aceitação e de desempenho</li>
-            <li>TMMi, KPIs de QA, RCA, gestão de incidentes e release management</li>
-            <li>Parecer técnico, ouvidoria e gestão de defeitos</li>
-            <li>Ritos Scrum: daily, planning, review e retrospectiva</li>
-            <li>Mentoria, feedback, PDI, avaliação técnica e onboarding</li>
-            <li>Massa de dados e gestão de configuração</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Ferramentas citadas nos cargos</h3>
-          <ul>
-            <li>Azure DevOps, ITSM, Power BI e Power Automate</li>
-            <li>Salesforce e SharePoint</li>
-            <li>Selenium IDE e Selenium WebDriver</li>
-            <li>Quality Center e Quick Test, no contexto SAP</li>
-          </ul>
-          <h3 class="follow">Implantação e negócio</h3>
-          <ul>
-            <li>Venda consultiva e proposta técnico-comercial</li>
-            <li>Site institucional, CRM e automação de processos</li>
-            <li>Gestão de projetos: escopo, prazo, dependência e entregável</li>
-            <li>Gestão da mudança e treinamento, na implantação do SEI</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Principais competências no perfil</h3>
-          <ul>
-            <li>Presentations</li>
-            <li>Business Requirements</li>
-            <li>Ecosystem Services</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Certificações e cursos</h3>
-          <ul>
-            <li>Scrum Foundations Professional Certificate (SFPC), em Honors-Awards</li>
-            <li>Fundamentos da Segurança desde a Concepção</li>
-            <li>Arquitetura de Software: Introdução ao Desenvolvimento de Sistemas Sustentáveis</li>
-            <li>Como Liderar e Motivar Diferentes Personalidades no Ambiente de Trabalho</li>
-            <li>Creating a Positive Customer Experience</li>
-            <li>Como Usar o Pensamento Crítico para Refinar o Julgamento e a Tomada de Decisões</li>
-          </ul>
-        </div>
-      </div>
-
-      <div id="formacao">
-        <h3 class="subh">Formação</h3>
-        <ul class="edu">
-          <li>
-            <strong>MBA USP/Esalq</strong>
-            <span>MBA, digital business · março de 2024 – dezembro de 2026</span>
-          </li>
-          <li>
-            <strong>Centro Universitário FIEO</strong>
-            <span>Technology Analysis and System Development · Desenvolvimento de Sistema · junho de 2008 – dezembro de 2011</span>
-          </li>
-          <li>
-            <strong>Fundação Bradesco</strong>
-            <span>Hardware Technician · Computer Hardware Technology/Technician · 2001 – 2003</span>
-          </li>
+        <ul class="hist">
+          <li><span class="when">jun/2017 – fev/2020<br>Recife · 2 anos e 9 meses</span><span><strong>Montreal Oficial.</strong> Líder de equipe e instrutor (ago/2019 – fev/2020): implantação do SEI na Secretaria Estadual de Saúde de Pernambuco, com treinamento e gestão da mudança. Analista de Sistemas e requisito (jan/2019 – ago/2019): requisitos funcionais e não funcionais da SES com os usuários. Engenheiro QA (jun/2017 – jan/2019): estratégia, casos, massa de teste, testes funcionais, integrados, de regressão e de aceitação, defeitos e gestão de configuração.</span></li>
+          <li><span class="when">nov/2015 – ago/2016<br>Recife e região</span><span><strong>Solloweb · Sales Consultant.</strong> Projeto Expansão Nordeste: análise de mercado, prospecção, feedback de produto e reestruturação do site institucional, com levantamento de requisitos, validação funcional e testes. A função também cobre marketing digital e QA.</span></li>
+          <li><span class="when">abr/2015 – out/2015<br>Brasil</span><span><strong>Emprego.net · QA Test Engineer.</strong> Testes funcionais, cenários, casos de teste e homologação na plataforma nacional de empregos.</span></li>
+          <li><span class="when">out/2012 – mar/2015<br>Recife</span><span><strong>CESAR · Software Test Engineer.</strong> Testes funcionais e exploratórios na Rapidão Cometa (atual FedEx Brasil), massa de dados em banco e gestão de defeitos. Grupo de estudos de automação com Selenium IDE e Selenium WebDriver.</span></li>
+          <li><span class="when">fev/2012 – out/2012<br>Recife e região</span><span><strong>FAST - Soluções Tecnológicas · Software Test Engineer.</strong> Testes em aplicações web e automação funcional com Selenium IDE, massa de dados e gestão de defeitos.</span></li>
+          <li><span class="when">nov/2011 – mar/2012<br>Atos - Lapa</span><span><strong>Mispa Consultoria e Sistemas Ltda · SQA Analyst / Automation Test.</strong> Cliente ATOS/Siemens. Testes de desempenho no Quality Center e cenários automatizados no Quick Test, na atualização do SAP 4.6 para 6.0.</span></li>
+          <li><span class="when">set/2010 – out/2011<br>São Paulo e região</span><span><strong>AgenciaClick Isobar · QA Analyst.</strong> Planejamento e execução de testes, massa de dados e gestão de bugs em sites, jogos, hotsites, smartphones e fanpages.</span></li>
+          <li><span class="when">nov/2009 – ago/2010<br>São Paulo e região</span><span><strong>ATECH – Negócios em Tecnologia S/A · Test Analyst.</strong> Sistema Java de gestão de procedimentos e custos hospitalares, com metodologias ágeis, histórias de teste, ambientes de teste e release (build e deploy).</span></li>
+          <li><span class="when">jul/2009 – out/2009<br>São Paulo e região</span><span><strong>CPqD Technologies &amp; Systems, Inc. · Test Analyst.</strong> Testes na integração dos sistemas do Santander e do Unibanco, com massa de dados e gestão de defeitos.</span></li>
+          <li><span class="when">fev/2008 – jun/2009<br>São Paulo e região</span><span><strong>F5 Web Design e Tecnologia Atualizada · Test Analyst.</strong> Testes em sites, jogos, hotsites e mobile, com massa de dados e gestão de defeitos.</span></li>
+          <li><span class="when">jan/2007 – jan/2008<br>São Paulo e região</span><span><strong>Nextel Telecomunicações Ltda · Test Analyst.</strong> Plano de testes em aplicações web e em financiamento Oracle, incluindo a fase de pré-teste e a integração com o desenvolvimento.</span></li>
+          <li><span class="when">fev/2006 – dez/2006<br>São Paulo e região</span><span><strong>UOL · Analyst Support.</strong> Prestação de serviços pela G&amp;P. Suporte ao cliente em conexão e instalação: TCP/IP, ADSL, e-mail e navegadores.</span></li>
+          <li><span class="when">mai/2003 – nov/2004<br>Osasco</span><span><strong>Bradesco · Telemarketing operator.</strong> Atendimento de cartão de crédito e conta corrente em call center, com orientação sobre o sistema bancário e venda passiva e ativa de pacotes.</span></li>
         </ul>
-        <h3 class="subh">Idioma</h3>
-        <p>Português — nativo.</p>
       </div>
     </section>
 
-    <section class="block" id="contato" aria-labelledby="contato-titulo">
-      <p class="kicker">Contato</p>
-      <h2 id="contato-titulo">Onde me encontrar.</h2>
-      <ul class="contact-list">
-        <li>
-          <span class="lbl">E-mail</span>
-          <a href="mailto:alainageev@gmail.com">alainageev@gmail.com</a>
-        </li>
-        <li>
-          <span class="lbl">Telefone</span>
-          <a href="tel:+5581995148993">(81) 99514-8993</a>
-        </li>
-        <li>
-          <span class="lbl">LinkedIn</span>
-          <a href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/in/alainageev/</a>
-        </li>
-        <li>
-          <span class="lbl">GitHub</span>
-          <span><a href="https://github.com/alain-ageev">https://github.com/alain-ageev</a></span>
-        </li>
-        <li>
-          <span class="lbl">Local</span>
-          <span>Brasil. A função atual, na Soultech Solutions, está em São Paulo.</span>
-        </li>
-      </ul>
+    <section class="block" id="ponte">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="sec-label">Prática</p>
+            <h2>O que entra no trabalho, no detalhe.</h2>
+          </div>
+          <p>Seis frentes que o currículo descreve, da escala da Unidas à implantação na Soultech.</p>
+        </div>
+        <div class="pilares">
+          <article class="pilar"><p class="n">01 · padrão</p><h3>Qualidade, segurança e compliance na escala da operação</h3><p>Na Unidas, o padrão de teste funcional e não funcional valeu para 40 squads, alinhado a norma de mercado e ao negócio.</p></article>
+          <article class="pilar"><p class="n">02 · maturidade</p><h3>TMMi no ciclo inteiro</h3><p>Diagnóstico da maturidade, plano de ação, implementação, verificação e melhoria contínua, com elevação do nível de maturidade dos processos de teste.</p></article>
+          <article class="pilar"><p class="n">03 · indicador</p><h3>KPI e FUP para a liderança</h3><p>Indicadores de performance de QA e acompanhamento de processos críticos, para a decisão de TI na Unidas.</p></article>
+          <article class="pilar"><p class="n">04 · causa</p><h3>RCA com release e incidente</h3><p>Riscos e falhas mapeados com Release Management e Gestão de Incidentes, com a causa raiz disseminada para evitar falha recorrente.</p></article>
+          <article class="pilar"><p class="n">05 · time</p><h3>Rito ágil, mentoria e onboarding</h3><p>Dailies, plannings, reviews e retrospectivas em 20 squads na Unidas. Mentorias, feedback, PDI e o onboarding de 4 analistas.</p></article>
+          <article class="pilar"><p class="n">06 · entrega</p><h3>Da proposta à implantação</h3><p>Na Soultech Solutions, a mesma frente vende e implanta: site institucional, CRM e automação de processo, com escopo, prazo e entregável acompanhados.</p></article>
+        </div>
+        <div class="ganhos">
+          <div class="ganho"><span class="num">40</span><b>Squads</b><small>Padrão de qualidade e teste na Unidas.</small></div>
+          <div class="ganho"><span class="num">38%</span><b>Ouvidoria</b><small>Menos reclamações em 3 anos na Brasilprev, área DXLAB.</small></div>
+          <div class="ganho"><span class="num">20</span><b>Ritos ágeis</b><small>Squads com daily, planning, review e retrospectiva na Unidas.</small></div>
+          <div class="ganho"><span class="num">4</span><b>Onboarding</b><small>Novos analistas conduzidos na Unidas.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="projetos">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="sec-label">Projetos</p>
+            <h2>Frentes com nome na trajetória.</h2>
+          </div>
+          <p>Nomes que o currículo registra. Não são repositórios.</p>
+        </div>
+        <div class="projects">
+          <article class="project"><p class="p-kind">Soultech Solutions · mar/2026 – atual</p><h3>Sites, CRM e automações</h3><p>Frente em execução: venda consultiva, proposta, acompanhamento de site institucional, estruturação de CRM e automação de atividades comerciais e operacionais.</p></article>
+          <article class="project"><p class="p-kind">Montreal Oficial · ago/2019 – fev/2020 · Recife</p><h3>SEI na SES-PE</h3><p>Liderança da implantação do Sistema Eletrônico de Informações na Secretaria Estadual de Saúde de Pernambuco: treinamento, materiais, turmas e gestão da mudança. O órgão registrou a maior velocidade de implantação entre os do Governo de Pernambuco, e o modelo foi replicado por outros órgãos.</p></article>
+          <article class="project"><p class="p-kind">CESAR · out/2012 – mar/2015 · Recife</p><h3>Rapidão Cometa</h3><p>Testes funcionais e exploratórios no projeto da Rapidão Cometa, atual FedEx Brasil. Massa de dados em banco, gestão de defeitos e estudo de Selenium IDE e Selenium WebDriver.</p></article>
+          <article class="project"><p class="p-kind">Mispa · nov/2011 – mar/2012 · cliente ATOS/Siemens</p><h3>SAP 4.6 para 6.0</h3><p>Testes de desempenho no Quality Center e cenários automatizados no Quick Test, na atualização de versão do SAP.</p></article>
+          <article class="project"><p class="p-kind">CPqD · jul/2009 – out/2009</p><h3>Santander e Unibanco</h3><p>Testes na integração entre os sistemas do Santander e do Unibanco, com massa de dados e gestão de defeitos.</p></article>
+          <article class="project"><p class="p-kind">Solloweb · nov/2015 – ago/2016 · Recife e região</p><h3>Expansão Nordeste</h3><p>Análise de mercado, prospecção e reestruturação do site institucional, com requisitos, validação funcional e testes de qualidade.</p></article>
+        </div>
+        <p class="nota">Não há repositório público ligado a estas frentes. Os nomes saem do currículo, não de um perfil no GitHub.</p>
+      </div>
+    </section>
+
+    <section class="block" id="competencias">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="sec-label">Competências</p>
+            <h2>Ferramentas, prática e formação.</h2>
+          </div>
+          <p>O que os cargos nomeiam. A automação com Selenium e Quick Test está no histórico, não na frente atual.</p>
+        </div>
+        <div class="skills">
+          <article class="skill-card">
+            <div class="sk-head"><h3>Governança e teste</h3><small>Padrão, risco e time</small></div>
+            <div class="sk-tags">
+              <span>Governança de TI</span><span>Segurança e compliance</span><span>Testes funcionais e não funcionais</span><span>Exploratórios</span><span>Integração</span><span>Regressão</span><span>UAT</span><span>Desempenho</span><span>TMMi</span><span>KPI de QA</span><span>RCA</span><span>Gestão de incidentes</span><span>Release management</span><span>Parecer técnico</span><span>Ouvidoria</span><span>Scrum</span><span>Mentoria e onboarding</span><span>Massa de dados</span>
+            </div>
+          </article>
+          <article class="skill-card">
+            <div class="sk-head"><h3>Ferramentas citadas nos cargos</h3><small>Brasilprev, CESAR, FAST e Mispa</small></div>
+            <div class="sk-tags">
+              <span>Azure DevOps</span><span>ITSM</span><span>Power BI</span><span>Power Automate</span><span>Salesforce</span><span>SharePoint</span><span>Selenium IDE</span><span>Selenium WebDriver</span><span>Quality Center</span><span>Quick Test (SAP)</span>
+            </div>
+          </article>
+          <article class="skill-card">
+            <div class="sk-head"><h3>Implantação e negócio</h3><small>Soultech e SEI</small></div>
+            <div class="sk-tags">
+              <span>Venda consultiva</span><span>Proposta técnico-comercial</span><span>Site institucional</span><span>CRM</span><span>Automação de processos</span><span>Gestão de projetos</span><span>Gestão da mudança</span>
+            </div>
+          </article>
+          <article class="skill-card">
+            <div class="sk-head"><h3>Principais competências no perfil</h3><small>Como estão listadas</small></div>
+            <div class="sk-tags">
+              <span>Presentations</span><span>Business Requirements</span><span>Ecosystem Services</span>
+            </div>
+          </article>
+        </div>
+        <div class="creds" id="formacao">
+          <div>
+            <p class="sec-label">Formação</p>
+            <div class="edu">
+              <div class="edu-item"><b>MBA USP/Esalq</b><small>MBA, digital business · março de 2024 – dezembro de 2026</small></div>
+              <div class="edu-item"><b>Centro Universitário FIEO</b><small>Technology Analysis and System Development · Desenvolvimento de Sistema · junho de 2008 – dezembro de 2011</small></div>
+              <div class="edu-item"><b>Fundação Bradesco</b><small>Hardware Technician · Computer Hardware Technology/Technician · 2001 – 2003</small></div>
+              <div class="edu-item"><b>Português</b><small>Nativo</small></div>
+            </div>
+          </div>
+          <div>
+            <p class="sec-label">Certificações e cursos</p>
+            <div class="cert-grid">
+              <div class="cert"><b>Scrum Foundations Professional Certificate (SFPC)</b><small>Honors-Awards</small></div>
+              <div class="cert"><b>Fundamentos da Segurança desde a Concepção</b></div>
+              <div class="cert"><b>Arquitetura de Software: Introdução ao Desenvolvimento de Sistemas Sustentáveis</b></div>
+              <div class="cert"><b>Como Liderar e Motivar Diferentes Personalidades no Ambiente de Trabalho</b></div>
+              <div class="cert"><b>Creating a Positive Customer Experience</b></div>
+              <div class="cert"><b>Como Usar o Pensamento Crítico para Refinar o Julgamento e a Tomada de Decisões</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
+
+  <section class="contact" id="contato">
+    <div class="wrap">
+      <div class="contact-card">
+        <div class="contact-main">
+          <p class="sec-label">Contato</p>
+          <h2>Onde me encontrar.</h2>
+          <p>A função atual, na Soultech Solutions, está em São Paulo. O perfil público é o do LinkedIn.</p>
+          <div class="modos">
+            <div class="modo"><div><b>São Paulo</b><small>Função atual na Soultech Solutions</small></div></div>
+            <div class="modo"><div><b>Brasil</b><small>Local informado no perfil</small></div></div>
+          </div>
+        </div>
+        <div class="contact-links">
+          <a class="c-link" href="mailto:alainageev@gmail.com"><span class="c-txt"><small>E-mail</small><b>alainageev@gmail.com</b></span><span class="seta">↗</span></a>
+          <a class="c-link" href="tel:+5581995148993"><span class="c-txt"><small>Telefone</small><b>(81) 99514-8993</b></span><span class="seta">↗</span></a>
+          <a class="c-link" href="https://www.linkedin.com/in/alainageev/" target="_blank" rel="noopener noreferrer"><span class="c-txt"><small>LinkedIn</small><b>linkedin.com/in/alainageev</b></span><span class="seta">↗</span></a>
+          <a class="c-link" href="https://github.com/alain-ageev" target="_blank" rel="noopener noreferrer"><span class="c-txt"><small>GitHub</small><b>github.com/alain-ageev</b></span><span class="seta">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    <p>Alain Ageev · Governança em TI na Soultech Solutions</p>
+    <div class="wrap"><span>Alain Ageev</span><span>Governança em TI na Soultech Solutions</span></div>
   </footer>
+
   <script>
     (function () {
+      var nav = document.getElementById("nav");
       var btn = document.getElementById("menu-btn");
       var menu = document.getElementById("menu");
       btn.addEventListener("click", function () {
-        var open = menu.classList.toggle("is-open");
+        var open = menu.classList.toggle("open");
         btn.setAttribute("aria-expanded", open ? "true" : "false");
       });
       menu.addEventListener("click", function (event) {
         if (event.target.closest("a")) {
-          menu.classList.remove("is-open");
+          menu.classList.remove("open");
           btn.setAttribute("aria-expanded", "false");
         }
       });
+      addEventListener("scroll", function () {
+        nav.classList.toggle("scrolled", scrollY > 8);
+      }, { passive: true });
+
+      var cv = document.getElementById("grade");
+      var ctx = cv.getContext("2d");
+      var w = 0, h = 0, t = 0, visivel = true;
+      var cel = 48, amp = 8, passo = 8;
+      var reduzir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function medir() {
+        var dpr = Math.min(devicePixelRatio || 1, 2);
+        w = cv.clientWidth;
+        h = cv.clientHeight;
+        cv.width = w * dpr;
+        cv.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function desenhar() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = "rgba(255,255,255,.07)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        var x, y, px, py;
+        for (x = -cel; x <= w + cel; x += cel) {
+          for (y = -cel; y <= h + cel; y += passo) {
+            px = x + amp * Math.sin(y / 140 + t);
+            py = y + amp * 0.6 * Math.sin(x / 160 - t * 0.8);
+            if (y === -cel) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+        }
+        for (y = -cel; y <= h + cel; y += cel) {
+          for (x = -cel; x <= w + cel; x += passo) {
+            px = x + amp * Math.sin(y / 140 + t);
+            py = y + amp * 0.6 * Math.sin(x / 160 - t * 0.8);
+            if (x === -cel) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+        }
+        ctx.stroke();
+      }
+      function quadro() {
+        if (visivel && !reduzir) { t += 0.006; desenhar(); }
+        requestAnimationFrame(quadro);
+      }
+      medir();
+      desenhar();
+      addEventListener("resize", function () { medir(); desenhar(); });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) { visivel = entries[0].isIntersecting; }).observe(cv);
+      }
+      if (!reduzir) requestAnimationFrame(quadro);
     })();
   </script>
 </body>
